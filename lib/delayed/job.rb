@@ -139,10 +139,8 @@ module Delayed
       conditions.unshift(sql)
 
       records = ActiveRecord::Base.silence do
-        find(:all, :conditions => conditions, :order => NextTaskOrder, :limit => limit)
+        find(:all, :conditions => conditions, :order => NextTaskOrder, :limit => limit, :order => 'RAND()')
       end
-
-      records.sort_by { rand() }
     end
 
     # Run the next job we can get an exclusive lock on.
